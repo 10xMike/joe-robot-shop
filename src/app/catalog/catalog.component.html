@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="filters">
+    <a class="button bold" (click)="filter = 'Heads'">Heads</a>
+    <a class="button bold" (click)="filter = 'Arms'">Arms</a>
+    <a class="button bold" (click)="filter = 'Torsos'">Torsos</a>
+    <a class="button bold" (click)="filter = 'Bases'">Bases</a>
+    <a class="button bold" (click)="filter = ''">All</a>
+  </div>
+
+  <!-- *ngFor="let product of products; let i=index" -->
+  <ul class="products">
+    @for (product of getFilteredProducts(); track product) {
+    <li class="product-item">
+      <div class="product">
+        <div class="product-details">
+          <img [src]="getImageUrl(product)" [alt]="product.name" />
+          <div class="product-info">
+            <div class="name">{{ product?.name }}</div>
+            <div class="description">{{ product?.description }}</div>
+            <div class="category">Part Type: {{ product?.category }}</div>
+          </div>
+        </div>
+        <div class="price">
+          <!-- null makes this 'possibly undefined' -->
+          <!-- *ngIf="product.discount===0" -->
+          <!-- @if (product.discount === 0) {
+          <div>{{ product.price | currency: "EUR" }}</div>
+          } -->
+
+          <!-- <div [class.strikethrough]="product.discount > 0">{{ product.price | currency: "EUR" }}</div> -->
+
+          <!-- <div [ngClass]="{strikethrough: product.discount > 0  }">{{ product.price | currency: "EUR" }}</div> -->
+
+          <div [ngStyle]="{color: product.discount > 0 ? 'red' : ''}" [ngClass]="getDiscountedClasses(product)">{{ product.price | currency: "EUR" }}</div>
+
+          @if (product.discount > 0) {
+          <div class="discount">
+            {{ product.price * (1 - product.discount) | currency: "EUR" }}
+          </div>
+          }
+
+          <button class="cta">Buy</button>
+        </div>
+      </div>
+    </li>
+    }
+  </ul>
+</div>
