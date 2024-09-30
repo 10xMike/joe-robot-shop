@@ -16,7 +16,6 @@ export class CatalogComponent {
   filter: string = '';
   private cartSvc: CartService = inject(CartService);
 
-
   constructor() {
     this.products = [
       {
